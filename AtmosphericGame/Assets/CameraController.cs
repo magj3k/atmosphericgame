@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        initial_offset = new Vector3(0.0f, 2.85f, -10.0f);
+        initial_offset = new Vector3(0.0f, 4.6f, -10.0f);
 
         Camera camera = Camera.main;
         halfHeight = camera.orthographicSize;

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +23,7 @@ public class SpriteAnimator : MonoBehaviour {
 
     void Start() {
         // completes animation parameters for animationName
-        changeAnimation(animationName);
+        changeAnimation(initialAnimationName);
     }
 
     public void changeAnimation(string newAnimationName) {
@@ -44,6 +44,12 @@ public class SpriteAnimator : MonoBehaviour {
                 animation_length = 4;
                 frame_suffix = 0;
                 frame_buffer_length = 2;
+            } else if (animationName == "star_blink") {
+                texture_base = "tile_star_blink";
+                frame_prefix = 15;
+                animation_length = 3;
+                frame_suffix = 5;
+                frame_buffer_length = 4;
             }
         }
     }
@@ -70,7 +76,6 @@ public class SpriteAnimator : MonoBehaviour {
 
         if (current_texture != new_texture) {
             current_texture = new_texture;
-            Debug.Log(current_texture);
 
             spriteRenderer.sprite = Resources.Load<Sprite>(current_texture);
         }
