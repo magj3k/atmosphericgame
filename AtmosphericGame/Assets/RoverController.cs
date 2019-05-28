@@ -8,12 +8,12 @@ public class RoverController : PhysicsObject {
     public float jumpTakeOffSpeed = 7;
 
     private SpriteRenderer spriteRenderer;
-    // private Animator animator;
+    private SpriteAnimator spriteAnimator;
 
     // Use this for initialization
     void Awake () {
-        spriteRenderer = GetComponent<SpriteRenderer>();    
-        // animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteAnimator = GetComponent<SpriteAnimator>();
     }
 
     protected override void ComputeVelocity() {
@@ -22,8 +22,7 @@ public class RoverController : PhysicsObject {
 
         if (Input.GetButtonDown ("Jump") && grounded) {
             velocity.y = jumpTakeOffSpeed;
-        } else if (Input.GetButtonUp ("Jump")) 
-        {
+        } else if (Input.GetButtonUp ("Jump")) {
             if (velocity.y > 0) {
                 velocity.y = velocity.y * 0.5f;
             }
@@ -34,9 +33,14 @@ public class RoverController : PhysicsObject {
             spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
-        // animator.SetBool ("grounded", grounded);
-        // animator.SetFloat ("velocityX", Mathf.Abs (velocity.x) / maxSpeed);
-
         targetVelocity = move * maxSpeed;
+    }
+
+    void LateUpdate () {
+        if (targetVelocity.x <= 0.01 && targetVelocity.x >= -0.01) {
+            spriteAnimator.changeAnimation("rover_stand");
+        } else {
+            spriteAnimator.changeAnimation("rover_move");
+        }
     }
 }

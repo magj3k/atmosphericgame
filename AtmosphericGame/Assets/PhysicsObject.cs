@@ -42,13 +42,11 @@ public class PhysicsObject : MonoBehaviour {
     void FixedUpdate() {
         velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
         velocity.x = targetVelocity.x;
-
         grounded = false;
 
         Vector2 deltaPosition = velocity * Time.deltaTime;
         Vector2 moveAlongGround = new Vector2 (groundNormal.y, -groundNormal.x);
         Vector2 move = moveAlongGround * deltaPosition.x;
-        
 
         Movement (move, false);
         move = Vector2.up * deltaPosition.y;

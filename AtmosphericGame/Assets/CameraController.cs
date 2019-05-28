@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        initial_offset = transform.position - player.transform.position;
+        initial_offset = new Vector3(0.0f, 2.85f, -10.0f);
 
         Camera camera = Camera.main;
         halfHeight = camera.orthographicSize;
@@ -19,8 +19,8 @@ public class CameraController : MonoBehaviour {
 
     // Update is called once per frame
     void LateUpdate() {
-        float frame_x = Mathf.Round(player.transform.position.x/(halfWidth*2.0f));
-        float frame_y = Mathf.Round(player.transform.position.y/(halfHeight*2.0f));
+        float frame_x = Mathf.Round((player.transform.position.x - initial_offset.x)/(halfWidth*2.0f));
+        float frame_y = Mathf.Round((player.transform.position.y - initial_offset.y)/(halfHeight*2.0f));
 
         Vector3 offset = new Vector3(frame_x*halfWidth*2.0f, frame_y*halfHeight*2.0f, -10.0f);
         transform.position = offset + initial_offset;
