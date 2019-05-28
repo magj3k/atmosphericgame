@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoverController : PhysicsObject {
 
-    public float maxSpeed = 5.5f;
+    public float maxSpeed = 10.0f;
     public float jumpTakeOffSpeed = 7;
 
     private SpriteRenderer spriteRenderer;
