@@ -16,23 +16,23 @@ public class PhysicsObject : MonoBehaviour {
     protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D> (16);
 
-
     protected const float minMoveDistance = 0.001f;
     protected const float shellRadius = 0.01f;
 
     void OnEnable() {
-        rb2d = GetComponent<Rigidbody2D> ();
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
     void Start () {
         contactFilter.useTriggers = false;
-        contactFilter.SetLayerMask (Physics2D.GetLayerCollisionMask (gameObject.layer));
+        // contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        contactFilter.SetLayerMask(LayerMask.GetMask("Platform"));
         contactFilter.useLayerMask = true;
     }
 
     void Update () {
         targetVelocity = Vector2.zero;
-        ComputeVelocity ();    
+        ComputeVelocity();    
     }
 
     protected virtual void ComputeVelocity() {
@@ -57,14 +57,14 @@ public class PhysicsObject : MonoBehaviour {
         float distance = move.magnitude;
 
         if (distance > minMoveDistance) {
-            int count = rb2d.Cast (move, contactFilter, hitBuffer, distance + shellRadius);
-            hitBufferList.Clear ();
+            int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
+            hitBufferList.Clear();
             for (int i = 0; i < count; i++) {
-                hitBufferList.Add (hitBuffer [i]);
+                hitBufferList.Add(hitBuffer[i]);
             }
 
             for (int i = 0; i < hitBufferList.Count; i++) {
-                Vector2 currentNormal = hitBufferList [i].normal;
+                Vector2 currentNormal = hitBufferList[i].normal;
 
                 if (currentNormal.y > minGroundNormalY) {
                     grounded = true;
@@ -74,12 +74,12 @@ public class PhysicsObject : MonoBehaviour {
                     }
                 }
 
-                float projection = Vector2.Dot (velocity, currentNormal);
+                float projection = Vector2.Dot(velocity, currentNormal);
                 if (projection < 0) {
                     velocity = velocity - projection * currentNormal;
                 }
 
-                float modifiedDistance = hitBufferList [i].distance - shellRadius;
+                float modifiedDistance = hitBufferList[i].distance - shellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
         }

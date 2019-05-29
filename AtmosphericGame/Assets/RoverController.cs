@@ -33,6 +33,11 @@ public class RoverController : PhysicsObject {
             spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
+        if (velocity.y > jumpTakeOffSpeed) {
+            velocity.y = jumpTakeOffSpeed;
+        } else if (velocity.y < -jumpTakeOffSpeed) {
+            velocity.y = -jumpTakeOffSpeed;
+        }
         targetVelocity = move * maxSpeed;
     }
 
