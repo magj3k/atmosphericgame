@@ -8,7 +8,7 @@ public class PhysicsObject : MonoBehaviour {
     public float gravityModifier = 1f;
 
     protected Vector2 targetVelocity;
-    protected bool grounded;
+    protected bool grounded; // should be protected
     protected Vector2 groundNormal;
     protected Rigidbody2D rb2d;
     protected Vector2 velocity;

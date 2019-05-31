@@ -16,6 +16,7 @@ public class SpriteAnimator : MonoBehaviour {
     private int frame_suffix = 25;
     private string current_texture = "";
     private string texture_base = "";
+    private string next_animation = "";
 
     void Awake () {
         spriteRenderer = GetComponent<SpriteRenderer>();    
@@ -38,32 +39,53 @@ public class SpriteAnimator : MonoBehaviour {
                 animation_length = 10;
                 frame_suffix = 10;
                 frame_buffer_length = 3;
+                next_animation = "";
             } else if (animationName == "rover_move") {
                 texture_base = "char_walk";
                 frame_prefix = 0;
                 animation_length = 4;
                 frame_suffix = 0;
-                frame_buffer_length = 2;
+                frame_buffer_length = 3;
+                next_animation = "";
             } else if (animationName == "star_blink") {
                 texture_base = "tile_star_blink";
                 frame_prefix = 15;
                 animation_length = 3;
                 frame_suffix = 5;
                 frame_buffer_length = 4;
+                next_animation = "";
+            } else if (animationName == "sp_hover") {
+                texture_base = "sp_hover";
+                frame_prefix = 0;
+                animation_length = 9;
+                frame_suffix = 0;
+                frame_buffer_length = 3;
+                next_animation = "";
+            } else if (animationName == "sp_save") {
+                texture_base = "sp_save";
+                frame_prefix = 0;
+                animation_length = 5;
+                frame_suffix = 0;
+                frame_buffer_length = 2;
+                next_animation = "sp_hover";
             }
         }
     }
 
     // Update is called once per frame
     void Update() {
-        if (frame_buffer < frame_buffer_length) {
-            frame_buffer += 1;
-        } else {
+        if (frame_buffer >= frame_buffer_length) {
             frame_buffer = 0;
             frame += 1;
+        } else {
+            frame_buffer += 1;
         }
-        if (frame > frame_prefix+frame_suffix+animation_length) {
+        if (frame >= frame_prefix+frame_suffix+animation_length) {
             frame = 0;
+
+            if (next_animation != "") {
+                changeAnimation(next_animation);
+            }
         }
 
         string new_texture = "";
