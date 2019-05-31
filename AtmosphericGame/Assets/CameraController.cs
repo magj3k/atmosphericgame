@@ -14,8 +14,21 @@ public class CameraController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         initial_offset = new Vector3(0.0f, 4.8f, -10.0f);
-
         Camera camera = Camera.main;
+
+        // maintains aspect ratio of camera
+        float ratio = 0.575f;
+        if (Screen.height >= camera.pixelRect.size.x*ratio) {
+            float new_width = camera.pixelRect.size.x;
+            float new_height = camera.pixelRect.size.x*ratio;
+            camera.pixelRect = new Rect((Screen.width-new_width)*0.5f, (Screen.height-new_height)*0.5f, new_width, new_height);
+        } else {
+            float new_width = camera.pixelRect.size.y/ratio;
+            float new_height = camera.pixelRect.size.y;
+            camera.pixelRect = new Rect((Screen.width-new_width)*0.5f, (Screen.height-new_height)*0.5f, new_width, new_height);
+        }
+
+        // gets variables from camera
         halfHeight = camera.orthographicSize;
         halfWidth = camera.aspect * halfHeight;
     }
