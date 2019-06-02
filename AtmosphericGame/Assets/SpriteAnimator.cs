@@ -34,40 +34,47 @@ public class SpriteAnimator : MonoBehaviour {
             frame_buffer = 0;
 
             if (animationName == "rover_stand") {
-                texture_base = "char_stand";
+                texture_base = "char_stand_";
                 frame_prefix = 30;
                 animation_length = 10;
                 frame_suffix = 10;
                 frame_buffer_length = 3;
                 next_animation = "";
             } else if (animationName == "rover_move") {
-                texture_base = "char_walk";
+                texture_base = "char_walk_";
                 frame_prefix = 0;
                 animation_length = 4;
                 frame_suffix = 0;
                 frame_buffer_length = 3;
                 next_animation = "";
             } else if (animationName == "star_blink") {
-                texture_base = "tile_star_blink";
+                texture_base = "tile_star_blink_";
                 frame_prefix = 15;
                 animation_length = 3;
                 frame_suffix = 5;
                 frame_buffer_length = 4;
                 next_animation = "";
             } else if (animationName == "sp_hover") {
-                texture_base = "sp_hover";
+                texture_base = "sp_hover_";
                 frame_prefix = 0;
                 animation_length = 9;
                 frame_suffix = 0;
                 frame_buffer_length = 3;
                 next_animation = "";
             } else if (animationName == "sp_save") {
-                texture_base = "sp_save";
+                texture_base = "sp_save_";
                 frame_prefix = 0;
                 animation_length = 5;
                 frame_suffix = 0;
                 frame_buffer_length = 2;
                 next_animation = "sp_hover";
+            } else if (animationName == "liquid") {
+                texture_base = "liquid_000";
+                frame_prefix = 0;
+                animation_length = 6;
+                frame_suffix = 0;
+                frame_buffer_length = 4;
+                next_animation = "";
             }
         }
     }
@@ -91,9 +98,9 @@ public class SpriteAnimator : MonoBehaviour {
         string new_texture = "";
         if (frame >= frame_prefix && frame < frame_prefix+animation_length) {
             int animation_frame = frame - frame_prefix + 1;
-            new_texture = texture_base + "_" + animation_frame.ToString();
+            new_texture = texture_base + animation_frame.ToString();
         } else {
-            new_texture = texture_base + "_1";
+            new_texture = texture_base + "1";
         }
 
         if (current_texture != new_texture) {
